@@ -1,5 +1,5 @@
 using System;
-using SEP4_Back_end.Model;
+using SEP4_Back_end;
 
 abstract public class Data
 {

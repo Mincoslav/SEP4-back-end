@@ -1,5 +1,4 @@
-using SEP4_Back_end.DB;
-using SEP4_Back_end.Model.UniversalList;
+using SEP4_Back_end;
 public class DatabaseManager
 {
 

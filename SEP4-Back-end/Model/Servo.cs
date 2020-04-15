@@ -1,9 +1,9 @@
-using SEP4_Back_end.Model;
+using SEP4_Back_end;
 
 public class Servo
 {
     public int ID {get;set;}
-    public boolean Spinning{get;set;}
+    public bool Spinning{get;set;}
 
     public Servo()
     {

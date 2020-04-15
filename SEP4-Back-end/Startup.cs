@@ -26,8 +26,6 @@ namespace SEP4_Back_end
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<ContextNameContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
         }
 
