@@ -1,9 +1,17 @@
-using SEP4_Back_end;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-public class CO2 : Data
+namespace SEP4_Back_end.Model
 {
-    public CO2()
+    [Table("CO2")]
+    public class CO2 
     {
+        [Key]
+        public int CO2ID { get; set; }
+        public float CO2_value { get; set; }
+        public DateTime Date { get; set; }
         
     }
 }

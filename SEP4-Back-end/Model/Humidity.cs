@@ -1,9 +1,19 @@
-using SEP4_Back_end;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Humidity : Data
+namespace SEP4_Back_end.Model
 {
-    public Humidity()
+    [Table("Humidity")]
+    public class Humidity 
     {
+        [Key]
+        public int HUM_ID { get; set; }
+        public float HUM_value { get; set; }
+        public DateTime Date { get; set; }
+        public Humidity()
+        {
         
+        }
     }
 }

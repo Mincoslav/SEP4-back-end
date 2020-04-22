@@ -1,7 +1,15 @@
-using SEP4_Back_end;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Room
+namespace SEP4_Back_end.Model
 {
-    public int RoomID {get;set;}
-    public string Name {get;set;}
+    [Table("Room")]
+    public class Room
+    {
+        [Key]
+        public int RoomID {get;set;}
+        public string Name {get;set;}
+        public string Location { get; set; }
+    }
 }

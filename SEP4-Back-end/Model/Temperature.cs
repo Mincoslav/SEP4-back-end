@@ -1,9 +1,19 @@
-using SEP4_Back_end;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Temperature : Data
+namespace SEP4_Back_end.Model
 {
-    public Temperature()
+    [Table("Temperature")]
+    public class Temperature 
     {
+        [Key]
+        public int TEMP_ID { get; set; }
+        public float TEMP_value { get; set; }
+        public DateTime Date { get; set; }
+        public Temperature()
+        {
         
+        }
     }
 }

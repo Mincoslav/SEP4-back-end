@@ -1,9 +1,21 @@
-using SEP4_Back_end;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class HumidityList : UniversalList
+namespace SEP4_Back_end.Model
 {
-    public HumidityList()
+    [Table("HumidityList")]
+    public class HumidityList 
     {
-
+        
+        [ForeignKey("Room")]
+        public int ROOM_ID { get; set; }
+        [ForeignKey("Humidity")]
+        public int HUM_ID { get; set; }
+        
+        public virtual Humidity Humidity { get; set; }
+        public virtual Room Room { get; set; }
+        public HumidityList()
+        {
+    
+        }
     }
 }
