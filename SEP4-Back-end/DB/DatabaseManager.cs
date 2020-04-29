@@ -108,7 +108,7 @@ public class DatabaseManager : IDatabaseManager
         List<Humidity> humidities = _context.Humidity.FromSqlRaw($"SELECT * FROM Humidity WHERE {dateTime} = Humidity.Date").ToList(); //might not work
         Humidity h = humidities[0];
         string s = JsonSerializer.Serialize(h);
-        return s;
+        return s;  
     }
 
     public string getTemperature(DateTime dateTime)
