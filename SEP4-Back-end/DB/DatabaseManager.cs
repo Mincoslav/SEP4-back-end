@@ -100,7 +100,7 @@ public class DatabaseManager : IDatabaseManager
         List<CO2> co2list = _context.CO2.FromSqlRaw($"SELECT * FROM CO2 WHERE {dateTime} = CO2.Date").ToList(); //might not work
         CO2 co2 = co2list[0];
         string s = JsonSerializer.Serialize(co2);
-        return s;
+        return s; 
     }
 
     public string getHumidity(DateTime dateTime)
