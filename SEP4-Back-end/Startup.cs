@@ -44,6 +44,7 @@ namespace SEP4_Back_end
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseMvc();
         }
     }
 }
