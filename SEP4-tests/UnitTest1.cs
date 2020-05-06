@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using NUnit.Framework;
 using SEP4_Back_end.Model;
@@ -78,6 +79,46 @@ namespace SEP4_tests
             string servo_JSON = _manager.getServo(dateTime);
             Servo servo2 = JsonSerializer.Deserialize<Servo>(servo_JSON);
             Assert.AreEqual(servo2.Spinning, servo.Spinning);
+        }
+
+        [Test]
+        public void Co2Test()
+        {
+            List<CO2> list = JsonSerializer.Deserialize<List<CO2>>(_manager.getCO2List("toilet"));
+            Assert.IsInstanceOf<CO2>(list[0]);
+            Assert.IsNotEmpty(list);
+        }
+        
+        [Test]
+        public void HumiditiesTest()
+        {
+            List<Humidity> list = JsonSerializer.Deserialize<List<Humidity>>(_manager.getHumidityList("toilet"));
+            Assert.IsInstanceOf<Humidity>(list[0]);
+            Assert.IsNotEmpty(list);
+        }
+        
+        [Test]
+        public void TemperatureTest()
+        {
+            List<Temperature> list = JsonSerializer.Deserialize<List<Temperature>>(_manager.getTemperatureList("toilet"));
+            Assert.IsInstanceOf<CO2>(list[0]);
+            Assert.IsNotEmpty(list);
+        }
+        
+        [Test]
+        public void ServoTest()
+        {
+            List<Servo> list = JsonSerializer.Deserialize<List<Servo>>(_manager.getServoList("toilet"));
+            Assert.IsInstanceOf<CO2>(list[0]);
+            Assert.IsNotEmpty(list);
+        }
+
+        [Test]
+        public void GetRoomByNameTest()
+        {
+            Room r = _manager.getRoomByName("randomNameThatForSureDoesntExist");
+            Room r2 = _manager.getRoomByName("randomNameThatForSureDoesntExist");
+            Assert.Equals(r, r2);
         }
 
         

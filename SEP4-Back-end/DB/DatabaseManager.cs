@@ -117,7 +117,7 @@ public class DatabaseManager : IDatabaseManager
         Humidity h = humidities[0];
         string s = JsonSerializer.Serialize(h);
         return s;   
-    } 
+    }
 
     public string getTemperature(DateTime dateTime)
     {
