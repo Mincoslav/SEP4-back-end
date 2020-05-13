@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -11,6 +12,10 @@ using SEP4_Back_end.Model;
 public class DatabaseManager : IDatabaseManager
 {
     private Context _context= new Context();
+    private static GregorianCalendar calendar = new System.Globalization.GregorianCalendar();
+    private static CultureInfo culture = new CultureInfo("en-US");
+    private CalendarWeekRule calendarWeekRule = culture.DateTimeFormat.CalendarWeekRule;
+    private DayOfWeek dayOfWeek = culture.DateTimeFormat.FirstDayOfWeek;
     
 
     public void persistCO2(string co2,string roomName)
@@ -237,5 +242,70 @@ public class DatabaseManager : IDatabaseManager
         
 
         return returnRoom;
+    }
+
+    public string getHumidityList(string roomName, int weekNumber)
+    {
+        Room r = getRoomByName(roomName);
+        var id = r.RoomID;
+
+        //return the first list from "list" to get the variables.
+        List<HumidityList> list =  _context.Humidities.Where(humidityList => humidityList.ROOM_ID == id && calendar.GetWeekOfYear(humidityList.Humidity.Date,calendarWeekRule,dayOfWeek) == weekNumber).ToList();
+        List<Humidity> humidityList2 = new List<Humidity>();
+        
+        for (int i = 0; i < list.Capacity; i++)
+        {
+            int humidityId = list[i].HUM_ID;
+            List<Humidity> humidities = _context.Humidity.Where(humidity => humidity.HUM_ID == humidityId).ToList();
+            humidityList2[i] = humidities[0];
+        }        
+        
+        string s = JsonSerializer.Serialize(humidityList2);
+        return s;
+    }
+
+    public string getCO2List(string roomName, int weekNumber)
+    {
+        Room r = getRoomByName(roomName);
+        var id = r.RoomID;
+        
+        //return the first list from "list" to get the variables.
+        List<CO2List> list =  _context.CO2s.Where(co2List => co2List.ROOM_ID == id && calendar.GetWeekOfYear(co2List.CO2.Date,calendarWeekRule,dayOfWeek) == weekNumber).ToList();
+        List<CO2> co2list = new List<CO2>();
+        
+        for (int i = 0; i < list.Capacity; i++)
+        {
+            int co2Id = list[i].CO2_ID;
+            List<CO2> co2 = _context.CO2.Where(co2 => co2.CO2ID == co2Id).ToList();
+            co2list[i] = co2[0];
+        }        
+        
+        string s = JsonSerializer.Serialize(co2list);
+        return s;
+    }
+
+    public string getTemperatureList(string roomName, int weekNumber)
+    {
+        Room r = getRoomByName(roomName);
+        var id = r.RoomID;
+        
+        //return the first list from "list" to get the variables.
+        List<TemperatureList> list =  _context.Temperatures.Where(temperatureList => temperatureList.ROOM_ID == id && calendar.GetWeekOfYear(temperatureList.Temperature.Date,calendarWeekRule,dayOfWeek) == weekNumber).ToList();
+        List<Temperature> temperaturelist = new List<Temperature>();
+        
+        for (int i = 0; i < list.Capacity; i++)
+        {
+            int TempID = list[i].TEMP_ID;
+            List<Temperature> temperatures = _context.Temperature.Where(temperature => temperature.TEMP_ID == TempID).ToList();
+            temperaturelist[i] = temperatures[0];
+        }        
+        
+        string s = JsonSerializer.Serialize(temperaturelist);
+        return s;
+    }
+
+    public string getServoList(string roomName, int weekNumber)
+    {
+        throw new NotImplementedException();
     }
 }

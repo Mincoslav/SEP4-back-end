@@ -1,6 +1,6 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using SEP4_Back_end.DB;
-using System;
 
 namespace SEP4_Back_end.Controllers
 {

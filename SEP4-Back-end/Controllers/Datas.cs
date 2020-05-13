@@ -53,14 +53,14 @@ namespace SEP4_Back_end.Controllers {
             }
         }
 
-        [HttpGet ("{room}.{type}.{startDate}.{endDate}")]
+        /*[HttpGet ("{room}.{type}.{startDate}.{endDate}")]
         public ActionResult GetData (string room, string type, string startDate, string endDate) {
             try {
                 switch (type) {
                     case "CO2":
-                        return Ok (db.getCO2List (room, startDate, endDate));
+                        return Ok (db.getCO2List(room, startDate, endDate));
                     case "Humidity":
-                        return Ok (db.getHumidityList (room, startDate, endDate));
+                        return Ok (db.getHumidityList(room, startDate, endDate));
                     case "Temperature":
                         return Ok (db.getTemperatureList (room, startDate, endDate));
                     case "Servo":
@@ -72,6 +72,6 @@ namespace SEP4_Back_end.Controllers {
                 Console.WriteLine (e);
                 return BadRequest ("Malformed request");
             }
-        }
+        }*/
     }
 }

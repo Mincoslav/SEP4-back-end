@@ -19,5 +19,9 @@ namespace SEP4_Back_end.DB
         string getServoList(string roomName);
 
         Room getRoomByName(string name);
+        string getHumidityList(string roomName, int weekNumber);
+        string getCO2List(string roomName,int weekNumber);
+        string getTemperatureList(string roomName, int weekNumber);
+        string getServoList(string roomName, int weekNumber);
     }
 }
