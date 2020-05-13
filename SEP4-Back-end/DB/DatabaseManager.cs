@@ -19,6 +19,7 @@ public class DatabaseManager : IDatabaseManager
     
 
     public void persistCO2(string co2,string roomName)
+        //persist means adding to the database
     {
         CO2 co2Object;
         try
@@ -42,6 +43,7 @@ public class DatabaseManager : IDatabaseManager
     }
 
     public void persistHumdity(string humidity,string roomName)
+        //persist means adding to the database
     {
         Humidity humidityObject;
         try
@@ -63,7 +65,8 @@ public class DatabaseManager : IDatabaseManager
         }
     }
 
-    public void persistTemperature(string temperature,string roomName)
+    public void persistTemperature(string temperature,string roomName) 
+        //persist means adding to the database
     {
         Temperature temperatureObject;
         try
@@ -86,6 +89,7 @@ public class DatabaseManager : IDatabaseManager
     }
 
     public void persistServo(string servo,string roomName)
+        //persist means adding to the database
     {
         Servo servoObject;
         
@@ -250,7 +254,8 @@ public class DatabaseManager : IDatabaseManager
         var id = r.RoomID;
 
         //return the first list from "list" to get the variables.
-        List<HumidityList> list =  _context.Humidities.Where(humidityList => humidityList.ROOM_ID == id && calendar.GetWeekOfYear(humidityList.Humidity.Date,calendarWeekRule,dayOfWeek) == weekNumber).ToList();
+        List<HumidityList> list =  _context.Humidities.Where
+            (humidityList => humidityList.ROOM_ID == id && calendar.GetWeekOfYear(humidityList.Humidity.Date,calendarWeekRule,dayOfWeek) == weekNumber).ToList();
         List<Humidity> humidityList2 = new List<Humidity>();
         
         for (int i = 0; i < list.Capacity; i++)

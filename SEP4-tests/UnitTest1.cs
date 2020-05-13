@@ -121,6 +121,20 @@ namespace SEP4_tests
             Assert.Equals(r, r2);
         }
 
+        [Test]
+        public void GetHumidityListTest()
+        {
+            _manager.getHumidityList("toilet", 20);
+            HumidityList humidityList = new HumidityList();
+            humidityList.Humidity.HUM_value =(float) 10.5;
+            DateTime theTimeIsNow = new DateTime(2020,05,13);
+            humidityList.Humidity.Date = theTimeIsNow;
+            String originalList = JsonSerializer.Serialize(humidityList);
+            String databaseList = JsonSerializer.Serialize(_manager.getHumidityList("toilet", 20));
+
+            Assert.Equals(originalList, databaseList);
+        }
+
         
     }
 }
