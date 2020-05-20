@@ -101,7 +101,7 @@ namespace SEP4_tests
         public void TemperatureTest()
         {
             List<Temperature> list = JsonSerializer.Deserialize<List<Temperature>>(_manager.getTemperatureList("toilet"));
-            Assert.IsInstanceOf<CO2>(list[0]);
+            Assert.IsInstanceOf<Temperature>(list[0]);
             Assert.IsNotEmpty(list);
         }
         
@@ -109,7 +109,7 @@ namespace SEP4_tests
         public void ServoTest()
         {
             List<Servo> list = JsonSerializer.Deserialize<List<Servo>>(_manager.getServoList("toilet"));
-            Assert.IsInstanceOf<CO2>(list[0]);
+            Assert.IsInstanceOf<Servo>(list[0]);
             Assert.IsNotEmpty(list);
         }
 
@@ -118,23 +118,27 @@ namespace SEP4_tests
         {
             Room r = _manager.getRoomByName("randomNameThatForSureDoesntExist");
             Room r2 = _manager.getRoomByName("randomNameThatForSureDoesntExist");
-            Assert.Equals(r, r2);
+            Assert.AreEqual(r, r2);
         }
 
         [Test]
         public void GetHumidityListTest()
         {
-            _manager.getHumidityList("toilet", 20);
-            HumidityList humidityList = new HumidityList();
-            humidityList.Humidity.HUM_value =(float) 10.5;
             DateTime theTimeIsNow = new DateTime(2020,05,13);
-            humidityList.Humidity.Date = theTimeIsNow;
+            Humidity humidity = new Humidity();
+            humidity.Date = theTimeIsNow;
+            humidity.HUM_value = (float) 10.5;
+            HumidityList humidityList = new HumidityList();
+            //humidityList.Humidity.HUM_value =(float) 10.5;
+            humidityList.Humidity = humidity;
+            
             String originalList = JsonSerializer.Serialize(humidityList);
+            //System.Console.WriteLine(originalList);
             String databaseList = JsonSerializer.Serialize(_manager.getHumidityList("toilet", 20));
+           // System.Console.WriteLine(databaseList);
 
-            Assert.Equals(originalList, databaseList);
+
+            Assert.AreEqual(originalList, databaseList);
         }
-
-        
     }
 }
