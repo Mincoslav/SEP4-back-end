@@ -301,17 +301,26 @@ public class DatabaseManager : IDatabaseManager
         Room r = getRoomByName(roomName);
         var id = r.RoomID;
         
-        //return the first list from "list" to get the variables.
-        List<CO2List> list =  _context.CO2s.Where(co2List => co2List.ROOM_ID == id && calendar.GetWeekOfYear(co2List.CO2.Date,calendarWeekRule,dayOfWeek) == weekNumber).ToList();
+        
+        DateTime dateFromWeekNumber = FirstDateOfWeek(DateTime.Now.Year, weekNumber);
+        DateTime dateFromWeekNumberPlusOneWeek = FirstDateOfWeek(DateTime.Now.Year, weekNumber+1);
+
+        var list =
+            (from co2 in _context.CO2
+                join co2s in _context.CO2s on co2.CO2ID equals co2s.CO2_ID
+                where co2s.ROOM_ID == id && co2.Date >= dateFromWeekNumber && co2.Date < dateFromWeekNumberPlusOneWeek
+                select new { DATE = co2.Date, ROOM = co2s.ROOM_ID, VALUE = co2.CO2_value, CO2_ID = co2.CO2ID }).ToList(); //produces flat sequence
+        
+        System.Console.WriteLine(list.GetType());
+        
         List<CO2> co2list = new List<CO2>();
         
-        for (int i = 0; i < list.Capacity; i++)
+        for (int i = 0; i < list.Count; i++)
         {
             int co2Id = list[i].CO2_ID;
-            List<CO2> co2 = _context.CO2.Where(co2 => co2.CO2ID == co2Id).ToList();
-            co2list[i] = co2[0];
-        }        
-        
+            var co2element  = _context.CO2.Where(co2 => co2.CO2ID == co2Id).ToList()[0];
+            co2list.Add(co2element);
+        }      
         string s = JsonSerializer.Serialize(co2list);
         return s;
     }
@@ -321,15 +330,25 @@ public class DatabaseManager : IDatabaseManager
         Room r = getRoomByName(roomName);
         var id = r.RoomID;
         
-        //return the first list from "list" to get the variables.
-        List<TemperatureList> list =  _context.Temperatures.Where(temperatureList => temperatureList.ROOM_ID == id && calendar.GetWeekOfYear(temperatureList.Temperature.Date,calendarWeekRule,dayOfWeek) == weekNumber).ToList();
+           
+        DateTime dateFromWeekNumber = FirstDateOfWeek(DateTime.Now.Year, weekNumber);
+        DateTime dateFromWeekNumberPlusOneWeek = FirstDateOfWeek(DateTime.Now.Year, weekNumber+1);
+
+        var list =
+            (from temperature in _context.Temperature
+                join temperatureList in _context.Temperatures on temperature.TEMP_ID equals temperatureList.TEMP_ID
+                where temperatureList.ROOM_ID == id && temperature.Date >= dateFromWeekNumber && temperature.Date < dateFromWeekNumberPlusOneWeek
+                select new { DATE = temperature.Date, ROOM = temperatureList.ROOM_ID, VALUE = temperature.TEMP_value, TEMP_ID = temperature.TEMP_ID }).ToList(); //produces flat sequence
+        
+        System.Console.WriteLine(list.GetType());
+        
         List<Temperature> temperaturelist = new List<Temperature>();
         
         for (int i = 0; i < list.Capacity; i++)
         {
             int TempID = list[i].TEMP_ID;
             List<Temperature> temperatures = _context.Temperature.Where(temperature => temperature.TEMP_ID == TempID).ToList();
-            temperaturelist[i] = temperatures[0];
+            temperaturelist.Add(temperatures[0]);
         }        
         
         string s = JsonSerializer.Serialize(temperaturelist);
