@@ -289,7 +289,7 @@ public class DatabaseManager : IDatabaseManager
         {
             int humidityId = list[i].HUM_ID;
             var humidities  = _context.Humidity.Where(humidity => humidity.HUM_ID == humidityId).ToList()[0];
-            humidityList2[i] = humidities;
+            humidityList2.Add(humidities);
         }        
         
         string s = JsonSerializer.Serialize(humidityList2);
