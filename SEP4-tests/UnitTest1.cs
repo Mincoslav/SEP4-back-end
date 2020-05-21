@@ -126,19 +126,30 @@ namespace SEP4_tests
         {
             DateTime theTimeIsNow = new DateTime(2020,05,13);
             Humidity humidity = new Humidity();
+            humidity.HUM_ID = 15;
             humidity.Date = theTimeIsNow;
             humidity.HUM_value = (float) 10.5;
-            HumidityList humidityList = new HumidityList();
-            //humidityList.Humidity.HUM_value =(float) 10.5;
-            humidityList.Humidity = humidity;
+            List<Humidity> humidityList = new List<Humidity>();
+            humidityList.Add(humidity);
+
+            String humList = JsonSerializer.Serialize(humidityList);
+
+            List<Humidity> humidities = JsonSerializer.Deserialize<List<Humidity>>(humList);
             
-            String originalList = JsonSerializer.Serialize(humidityList);
-            //System.Console.WriteLine(originalList);
-            String databaseList = JsonSerializer.Serialize(_manager.getHumidityList("toilet", 20));
+            String databaseList = _manager.getHumidityList("toilet", 20);
+            List<Humidity> testerList = new List<Humidity>();
+            
+            testerList =  JsonSerializer.Deserialize<List<Humidity>>(databaseList);
+            DateTime time = testerList[0].Date;
            // System.Console.WriteLine(databaseList);
+            Console.WriteLine(humidityList[0]);
+            Console.WriteLine(testerList[0]);
+            
+            
+            Assert.AreEqual(humidities[0].Date, testerList[0].Date);
+            Assert.AreEqual(humidities[0].HUM_value, testerList[0].HUM_value);
+            Assert.AreEqual(humidities[0].HUM_ID, testerList[0].HUM_ID);
 
-
-            Assert.AreEqual(originalList, databaseList);
         }
     }
 }

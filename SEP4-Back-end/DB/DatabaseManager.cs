@@ -281,15 +281,18 @@ public class DatabaseManager : IDatabaseManager
             where humidities.ROOM_ID == id && humidity.Date >= dateFromWeekNumber && humidity.Date < dateFromWeekNumberPlusOneWeek
             select new { DATE = humidity.Date, ROOM = humidities.ROOM_ID, VALUE = humidity.HUM_value, HUM_ID = humidity.HUM_ID }).ToList(); //produces flat sequence
         
-        System.Console.WriteLine(list.GetType());
-        
         List<Humidity> humidityList2 = new List<Humidity>();
         
         for (int i = 0; i < list.Count; i++)
         {
-            int humidityId = list[i].HUM_ID;
-            var humidities  = _context.Humidity.Where(humidity => humidity.HUM_ID == humidityId).ToList()[0];
-            humidityList2.Add(humidities);
+            Humidity temp_humidity = new Humidity();
+
+            temp_humidity.Date = list[i].DATE;
+            temp_humidity.HUM_value = list[i].VALUE;
+            temp_humidity.HUM_ID = list[i].HUM_ID;
+            
+            Console.WriteLine(temp_humidity);
+            humidityList2.Add(temp_humidity);
         }        
         
         string s = JsonSerializer.Serialize(humidityList2);
