@@ -2,7 +2,15 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using SEP4_Back_end.DB;
 namespace SEP4_Back_end.Controllers {
-    //api/datas
+    
+    /// <summary>
+    /// <para>The API exposing <c>Datas</c> class.</para>
+    /// <para>Contains methods exposed on the API to be reached by the Android Application,
+    /// these being a dataset of the measurements.</para>
+    /// </summary>
+    /// <remarks>
+    /// <para>This class' methods can be reached at "api/datas/".</para>
+    /// </remarks>
     [Route ("api/[controller]")]
     [ApiController]
     public class Datas : ControllerBase {
@@ -11,7 +19,19 @@ namespace SEP4_Back_end.Controllers {
         public Datas () {
             db = new DatabaseManager ();
         }
-        //GET api/datas/GetDataList?room=toilet&type=Humidity
+        
+        /// <summary>
+        /// <para>Gets data depending on the type and room required.</para>
+        /// </summary>
+        /// <returns>
+        /// <para>Returns a JSON with the serialized list of objects required.</para>
+        /// </returns>
+        /// <param name="room">Room where the device is located.</param>
+        /// <param name="type">Type of object/measurement needed.</param>
+        /// <remarks>
+        /// <para>This method can be reached with a GET request at "api/datas/GetDataList?room={room}&type={type}".</para>
+        /// <example>"api/datas/GetDataList?room=RoomA&type=Humidity"</example>
+        /// </remarks>
         [HttpGet ("GetDataList")]
         public ActionResult GetDataList (string room, string type) {
             try {
@@ -32,8 +52,20 @@ namespace SEP4_Back_end.Controllers {
                 return BadRequest ("Malformed request");
             }
         }
-
-        //GET api/datas/GetByWeek?weeknumber=20&type=Humidity&room=toilet
+        /// <summary>
+        /// <para>Gets data depending on the type of measurement, room and week required.</para>
+        /// </summary>
+        /// <returns>
+        /// <para>Returns a JSON with the serialized list of objects required.</para>
+        /// </returns>
+        /// <param name="room">Room where the device is located.</param>
+        /// <param name="type">Type of object/measurement needed.</param>
+        /// <param name="weekNumber">Week in which the required measurements were saved.</param>
+        /// <remarks>
+        /// <para>This method can be reached with a GET request at:
+        /// "api/datas/GetByWeek?weeknumber={weeknumber}&type={type}&room={room}".</para>
+        /// <example>"api/datas/GetByWeek?weeknumber=15&type=Humidity&room=RoomA"</example>
+        /// </remarks>
         [HttpGet ("GetByWeek")]
         public ActionResult GetDataByWeek (int weekNumber, string type, string room) {
             try {
