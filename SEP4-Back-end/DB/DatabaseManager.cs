@@ -314,15 +314,17 @@ public class DatabaseManager : IDatabaseManager
                 where co2s.ROOM_ID == id && co2.Date >= dateFromWeekNumber && co2.Date < dateFromWeekNumberPlusOneWeek
                 select new { DATE = co2.Date, ROOM = co2s.ROOM_ID, VALUE = co2.CO2_value, CO2_ID = co2.CO2ID }).ToList(); //produces flat sequence
         
-        System.Console.WriteLine(list.GetType());
-        
         List<CO2> co2list = new List<CO2>();
         
         for (int i = 0; i < list.Count; i++)
         {
-            int co2Id = list[i].CO2_ID;
-            var co2element  = _context.CO2.Where(co2 => co2.CO2ID == co2Id).ToList()[0];
-            co2list.Add(co2element);
+            CO2 temp_co2 = new CO2();
+
+            temp_co2.Date = list[i].DATE;
+            temp_co2.CO2_value = list[i].VALUE;
+            temp_co2.CO2ID = list[i].CO2_ID;
+            
+            co2list.Add(temp_co2);
         }      
         string s = JsonSerializer.Serialize(co2list);
         return s;
@@ -333,7 +335,6 @@ public class DatabaseManager : IDatabaseManager
         Room r = getRoomByName(roomName);
         var id = r.RoomID;
         
-           
         DateTime dateFromWeekNumber = FirstDateOfWeek(DateTime.Now.Year, weekNumber);
         DateTime dateFromWeekNumberPlusOneWeek = FirstDateOfWeek(DateTime.Now.Year, weekNumber+1);
 
@@ -343,15 +344,17 @@ public class DatabaseManager : IDatabaseManager
                 where temperatureList.ROOM_ID == id && temperature.Date >= dateFromWeekNumber && temperature.Date < dateFromWeekNumberPlusOneWeek
                 select new { DATE = temperature.Date, ROOM = temperatureList.ROOM_ID, VALUE = temperature.TEMP_value, TEMP_ID = temperature.TEMP_ID }).ToList(); //produces flat sequence
         
-        System.Console.WriteLine(list.GetType());
-        
         List<Temperature> temperaturelist = new List<Temperature>();
         
         for (int i = 0; i < list.Capacity; i++)
         {
-            int TempID = list[i].TEMP_ID;
-            List<Temperature> temperatures = _context.Temperature.Where(temperature => temperature.TEMP_ID == TempID).ToList();
-            temperaturelist.Add(temperatures[0]);
+            Temperature temp_TEMP = new Temperature();
+
+            temp_TEMP.Date = list[i].DATE;
+            temp_TEMP.TEMP_value = list[i].VALUE;
+            temp_TEMP.TEMP_ID = list[i].TEMP_ID;
+            
+            temperaturelist.Add(temp_TEMP);
         }        
         
         string s = JsonSerializer.Serialize(temperaturelist);

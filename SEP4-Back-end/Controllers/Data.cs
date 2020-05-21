@@ -4,6 +4,7 @@ using SEP4_Back_end.DB;
 
 namespace SEP4_Back_end.Controllers
 {
+    //api/data
     [Route("api/[controller]")]
     [ApiController]
     public class Data : ControllerBase
@@ -15,7 +16,8 @@ namespace SEP4_Back_end.Controllers
             db = new DatabaseManager();
         }
 
-        [HttpGet("{date}.{type}")]
+        //GET api/data/GetData?date=DATETIME_VALUE&type=TYPENAME
+        [HttpGet("GetData")]
         public ActionResult GetData(DateTime date, string type)
         {
             switch(type)
@@ -28,8 +30,8 @@ namespace SEP4_Back_end.Controllers
             }
         }
 
-
-        [HttpPost("{room}.{servo}")]
+        //GET api/data/SetServo?room=toilet&servo=servoName
+        [HttpPost("SetServo")]
         public ActionResult SetServo(string room, string servo)
         {
             try

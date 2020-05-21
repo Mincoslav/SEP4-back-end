@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using SEP4_Back_end.DB;
 namespace SEP4_Back_end.Controllers {
+    //api/datas
     [Route ("api/[controller]")]
     [ApiController]
     public class Datas : ControllerBase {
@@ -10,9 +11,9 @@ namespace SEP4_Back_end.Controllers {
         public Datas () {
             db = new DatabaseManager ();
         }
-
-        [HttpGet ("{room}.{type}")]
-        public ActionResult GetData (string room, string type) {
+        //GET api/datas/GetDataList?room=toilet&type=Humidity
+        [HttpGet ("GetDataList")]
+        public ActionResult GetDataList (string room, string type) {
             try {
                 switch (type) {
                     case "CO2":
@@ -32,8 +33,9 @@ namespace SEP4_Back_end.Controllers {
             }
         }
 
-        [HttpGet ("{room}.{type}.{weekNumber}")]
-        public ActionResult GetData (string room, string type, int weekNumber) {
+        //GET api/datas/GetByWeek?weeknumber=20&type=Humidity&room=toilet
+        [HttpGet ("GetByWeek")]
+        public ActionResult GetDataByWeek (int weekNumber, string type, string room) {
             try {
                 switch (type) {
                     case "CO2":
