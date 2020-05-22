@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEP4-Back-end", "SEP4-Back-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEP4-tests", "SEP4-tests\SEP4-tests.csproj", "{29A50FA7-78C2-4DDF-9811-672C5C422DE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocket", "WebSocket\WebSocket.csproj", "{45D31BE0-B091-42CE-913E-9628BF155D89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{29A50FA7-78C2-4DDF-9811-672C5C422DE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29A50FA7-78C2-4DDF-9811-672C5C422DE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29A50FA7-78C2-4DDF-9811-672C5C422DE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45D31BE0-B091-42CE-913E-9628BF155D89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45D31BE0-B091-42CE-913E-9628BF155D89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45D31BE0-B091-42CE-913E-9628BF155D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45D31BE0-B091-42CE-913E-9628BF155D89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
