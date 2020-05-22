@@ -15,6 +15,14 @@ public class DatabaseManager : IDatabaseManager
     private CalendarWeekRule calendarWeekRule = culture.DateTimeFormat.CalendarWeekRule;
     private DayOfWeek dayOfWeek = culture.DateTimeFormat.FirstDayOfWeek;
 
+    /// <summary>
+    /// <para>Calculate first of day of the week based on a year and week number.</para>
+    /// </summary>
+    /// <param name="year">Year , usually the current year.</param>
+    /// <param name="weekOfYear">Week number,usually the current week. </param>
+    /// <returns>
+    /// <para>Returns first day of a specific week.</para>
+    /// </returns>
     public static DateTime FirstDateOfWeek(int year, int weekOfYear)
     {
         DateTime jan1 = new DateTime(year, 1, 1);
@@ -30,6 +38,12 @@ public class DatabaseManager : IDatabaseManager
         return firstMonday.AddDays(weekOfYear * 7);
     }
     
+    
+    /// <summary>
+    /// <para>Adds a CO2 measurement to the database based on the room it belongs.</para>
+    /// </summary>
+    /// <param name="co2">CO2 serialized object in JSON</param>
+    /// <param name="roomName">Room where the measurement was taken.</param>
     public void persistCO2(string co2,string roomName)
         //persist means adding to the database
     {
@@ -54,6 +68,11 @@ public class DatabaseManager : IDatabaseManager
        
     }
 
+    /// <summary>
+    /// <para>Adds a Humidity measurement to the database based on the room it belongs.</para>
+    /// </summary>
+    /// <param name="humidity">Humidity serialized object in JSON</param>
+    /// <param name="roomName">Room where the measurement was taken.</param>
     public void persistHumdity(string humidity,string roomName)
         //persist means adding to the database
     {
@@ -77,6 +96,11 @@ public class DatabaseManager : IDatabaseManager
         }
     }
 
+    /// <summary>
+    /// <para>Adds a temperature measurement to the database based on the room it belongs.</para>
+    /// </summary>
+    /// <param name="temperature">temperature serialized object in JSON</param>
+    /// <param name="roomName">Room where the measurement was taken.</param>
     public void persistTemperature(string temperature,string roomName) 
         //persist means adding to the database
     {
@@ -100,6 +124,12 @@ public class DatabaseManager : IDatabaseManager
         }
     }
 
+    
+    /// <summary>
+    /// <para>Adds a Servo change of state to the database based on the room it belongs.</para>
+    /// </summary>
+    /// <param name="servo">Servo serialized object in JSON</param>
+    /// <param name="roomName">Room where the measurement was taken.</param>
     public void persistServo(string servo,string roomName)
         //persist means adding to the database
     {
@@ -124,6 +154,14 @@ public class DatabaseManager : IDatabaseManager
         }
     }
 
+    
+    /// <summary>
+    /// <para>Gets a CO2 object from the database base on the time of the measurement</para>
+    /// </summary>
+    /// <param name="dateTime">Date and time of the measurement</param>
+    /// <returns>
+    /// <para>CO2 serialized into JSON</para>
+    /// </returns>
     public string getCO2(DateTime dateTime)
     {
         List<CO2> co2s;
@@ -133,6 +171,14 @@ public class DatabaseManager : IDatabaseManager
         return s; 
     }
 
+    
+    /// <summary>
+    /// <para>Gets a Humidity object from the database based on the time of the measurement</para>
+    /// </summary>
+    /// <param name="dateTime">Date and time of the measurement</param>
+    /// <returns>
+    /// <para>Humidity object serialized into JSON</para>
+    /// </returns>
     public string getHumidity(DateTime dateTime)
     {
         List<Humidity> humidities = _context.Humidity.Where(humidity => humidity.Date == dateTime).ToList(); //might  work
@@ -141,6 +187,13 @@ public class DatabaseManager : IDatabaseManager
         return s;   
     }
 
+    /// <summary>
+    /// <para>Gets a Temperature object from the database based on the time of the measurement</para>
+    /// </summary>
+    /// <param name="dateTime">Date and time of the measurement</param>
+    /// <returns>
+    /// <para>Temperature object serialized into JSON</para>
+    /// </returns>
     public string getTemperature(DateTime dateTime)
     {
         List<Temperature> temperatures = _context.Temperature.Where(temperature =>  temperature.Date == dateTime).ToList(); //might not work
@@ -149,6 +202,13 @@ public class DatabaseManager : IDatabaseManager
         return s;
     }
 
+    /// <summary>
+    /// <para>Gets a Servo object from the database based on the time of the measurement</para>
+    /// </summary>
+    /// <param name="dateTime">Date and time of the measurement</param>
+    /// <returns>
+    /// <para>Servo object serialized into JSON</para>
+    /// </returns>
     public string getServo(DateTime dateTime)
     {
         List<Servo> servos = _context.Servo.Where(servo => servo.Date == dateTime).ToList(); //might  work
@@ -157,6 +217,13 @@ public class DatabaseManager : IDatabaseManager
         return s;
     }
 
+    /// <summary>
+    /// <para>Gets a list of all the CO2 objects in the database from a certain Room.</para>
+    /// </summary>
+    /// <param name="roomName">Room name</param>
+    /// <returns>
+    /// <para>List of CO2 objects serialized into JSON</para>
+    /// </returns>
     public string getCO2List(string roomName)
     {
         Room r = getRoomByName(roomName);
@@ -182,6 +249,13 @@ public class DatabaseManager : IDatabaseManager
         return s;
     }
 
+    /// <summary>
+    /// <para>Gets a list of all the Humidity objects in the database from a certain Room.</para>
+    /// </summary>
+    /// <param name="roomName">Room name</param>
+    /// <returns>
+    /// <para>List of Humidity objects serialized into JSON</para>
+    /// </returns>
     public string getHumidityList(string roomName)
     {
         Room r = getRoomByName(roomName);
@@ -202,6 +276,13 @@ public class DatabaseManager : IDatabaseManager
         return s;
     }
 
+    /// <summary>
+    /// <para>Gets a list of all the Temperature objects in the database from a certain Room.</para>
+    /// </summary>
+    /// <param name="roomName">Room name</param>
+    /// <returns>
+    /// <para>List of Temperature objects serialized into JSON</para>
+    /// </returns>
     public string getTemperatureList(string roomName)
     {
         Room r = getRoomByName(roomName);
@@ -222,6 +303,13 @@ public class DatabaseManager : IDatabaseManager
         return s;
     }
 
+    /// <summary>
+    /// <para>Gets a list of all the Servo objects in the database from a certain Room.</para>
+    /// </summary>
+    /// <param name="roomName">Room name</param>
+    /// <returns>
+    /// <para>List of Servo objects serialized into JSON</para>
+    /// </returns>
     public string getServoList(string roomName)
     {
         Room r = getRoomByName(roomName);
@@ -242,6 +330,15 @@ public class DatabaseManager : IDatabaseManager
         return s;
     }
 
+    
+    /// <summary>
+    /// <para>Gets a room object from the database based on its name,
+    /// if it does not exist it is then created.</para>
+    /// </summary>
+    /// <param name="name">Room name</param>
+    /// <returns>
+    /// <para>Room object</para>
+    /// </returns>
     public Room getRoomByName(string name)
     {
         bool r =_context.Room.Any(room => room.Name==name); //might work
@@ -266,23 +363,35 @@ public class DatabaseManager : IDatabaseManager
         return returnRoom;
     }
 
+    /// <summary>
+    /// <para>Gets a list of all the <c>Humidity</c> objects in the database from a certain room in a certain week.</para>
+    /// </summary>
+    /// <param name="roomName">Room name</param>
+    /// <param name="weekNumber">Week number</param> 
+    /// <returns>
+    /// <para>List of <c>Humidity</c> objects serialized into JSON</para>
+    /// </returns>
+    /// <seealso cref="DatabaseManager.getRoomByName(string)"/>
     public string getHumidityList(string roomName, int weekNumber)
     {
+        //getting the room ID
         Room r = getRoomByName(roomName);
         var id = r.RoomID;
 
         DateTime dateFromWeekNumber = FirstDateOfWeek(2020, weekNumber);
         DateTime dateFromWeekNumberPlusOneWeek = FirstDateOfWeek(2020, weekNumber+1);
 
-        
+        //gets the list of objects in the database within the given dates and room
         var list =
             (from humidity in _context.Humidity
             join humidities in _context.Humidities on humidity.HUM_ID equals humidities.HUM_ID
             where humidities.ROOM_ID == id && humidity.Date >= dateFromWeekNumber && humidity.Date < dateFromWeekNumberPlusOneWeek
             select new { DATE = humidity.Date, ROOM = humidities.ROOM_ID, VALUE = humidity.HUM_value, HUM_ID = humidity.HUM_ID }).ToList(); //produces flat sequence
         
+        //temporary list to store the objects retrieved
         List<Humidity> humidityList2 = new List<Humidity>();
         
+        //transforming the data in list to objects and adding it to temperatureList
         for (int i = 0; i < list.Count; i++)
         {
             Humidity temp_humidity = new Humidity();
@@ -295,27 +404,44 @@ public class DatabaseManager : IDatabaseManager
             humidityList2.Add(temp_humidity);
         }        
         
+        //object serialization
         string s = JsonSerializer.Serialize(humidityList2);
         return s;
     }
 
+    
+    /// <summary>
+    /// <para>Gets a list of all the <c>CO2</c> objects in the database from a certain room in a certain week.</para>
+    /// </summary>
+    /// <param name="roomName">Room name</param>
+    /// <param name="weekNumber">Week number</param> 
+    /// <returns>
+    /// <para>List of <c>CO2</c> objects serialized into JSON</para>
+    /// </returns>
+    /// See <see cref="DatabaseManager.getRoomByName(string)"/> to understand how the room is retrieved.
+    /// See <see cref="DatabaseManager.FirstDateOfWeek(int,int)"/>  to understand how te first day of the week is calculated.
     public string getCO2List(string roomName, int weekNumber)
     {
+        //getting the room ID
         Room r = getRoomByName(roomName);
         var id = r.RoomID;
         
-        
+        //first day of the week
         DateTime dateFromWeekNumber = FirstDateOfWeek(DateTime.Now.Year, weekNumber);
+        //first day of the week after
         DateTime dateFromWeekNumberPlusOneWeek = FirstDateOfWeek(DateTime.Now.Year, weekNumber+1);
 
+        //gets the list of objects in the database within the given dates and room
         var list =
             (from co2 in _context.CO2
                 join co2s in _context.CO2s on co2.CO2ID equals co2s.CO2_ID
                 where co2s.ROOM_ID == id && co2.Date >= dateFromWeekNumber && co2.Date < dateFromWeekNumberPlusOneWeek
                 select new { DATE = co2.Date, ROOM = co2s.ROOM_ID, VALUE = co2.CO2_value, CO2_ID = co2.CO2ID }).ToList(); //produces flat sequence
         
+        //temporary list to store the objects retrieved
         List<CO2> co2list = new List<CO2>();
         
+        //transforming the data in list to objects and adding it to temperatureList
         for (int i = 0; i < list.Count; i++)
         {
             CO2 temp_co2 = new CO2();
@@ -326,26 +452,43 @@ public class DatabaseManager : IDatabaseManager
             
             co2list.Add(temp_co2);
         }      
+        
+        //object serialization
         string s = JsonSerializer.Serialize(co2list);
         return s;
     }
 
+    /// <summary>
+    /// <para>Gets a list of all the <c>Temperature</c> objects in the database from a certain room in a certain week.</para>
+    /// </summary>
+    /// <param name="roomName">Room name</param>
+    /// <param name="weekNumber">Week number</param> 
+    /// <returns>
+    /// <para>List of <c>Temperature</c> objects serialized into JSON</para>
+    /// </returns>
+    /// <seealso cref="DatabaseManager.getRoomByName(string)"/>
     public string getTemperatureList(string roomName, int weekNumber)
     {
+        //getting the room ID
         Room r = getRoomByName(roomName);
         var id = r.RoomID;
         
+        //first day of the week
         DateTime dateFromWeekNumber = FirstDateOfWeek(DateTime.Now.Year, weekNumber);
+        //first day of the week after
         DateTime dateFromWeekNumberPlusOneWeek = FirstDateOfWeek(DateTime.Now.Year, weekNumber+1);
 
+        //gets the list of objects in the database within the given dates and room
         var list =
             (from temperature in _context.Temperature
                 join temperatureList in _context.Temperatures on temperature.TEMP_ID equals temperatureList.TEMP_ID
                 where temperatureList.ROOM_ID == id && temperature.Date >= dateFromWeekNumber && temperature.Date < dateFromWeekNumberPlusOneWeek
                 select new { DATE = temperature.Date, ROOM = temperatureList.ROOM_ID, VALUE = temperature.TEMP_value, TEMP_ID = temperature.TEMP_ID }).ToList(); //produces flat sequence
-        
+       
+        //temporary list to store the objects retrieved
         List<Temperature> temperaturelist = new List<Temperature>();
         
+        //transforming the data in list to objects and adding it to temperatureList
         for (int i = 0; i < list.Capacity; i++)
         {
             Temperature temp_TEMP = new Temperature();
@@ -357,6 +500,7 @@ public class DatabaseManager : IDatabaseManager
             temperaturelist.Add(temp_TEMP);
         }        
         
+        //object serialization
         string s = JsonSerializer.Serialize(temperaturelist);
         return s;
     }
