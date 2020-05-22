@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using SEP4_Back_end.DB;
 using SEP4_Back_end.Model;
 
 namespace SEP4_Back_end
@@ -15,18 +12,16 @@ namespace SEP4_Back_end
     {
         public static void Main(string[] args)
         {
-            DatabaseManager _manager = new DatabaseManager();
-         
-            CO2 co2 = new CO2();
-            co2.CO2_value = (float) 12.4;
-            DateTime dateTime = DateTime.Now;
-            co2.Date = dateTime;
+            LoraReceiver loraReceiver = new LoraReceiver();
+            Packet packet3 = new Packet();
+            packet3.cmd = "tx";
+            packet3.EUI = "0004A30B00259F36";
+            packet3.port = 1;
+            packet3.data = "AABBCCDD";
+            packet3.confirmed = false;
+            Console.WriteLine(packet3.ToString());
+            loraReceiver.SendPacket(packet3);
 
-            String s;
-            
-            s = JsonSerializer.Serialize(co2);
-            
-            _manager.persistCO2(s, "toilet");
             CreateHostBuilder(args).Build().Run();
         }
 
