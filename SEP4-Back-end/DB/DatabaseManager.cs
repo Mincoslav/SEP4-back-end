@@ -10,10 +10,6 @@ using SEP4_Back_end.Model;
 public class DatabaseManager : IDatabaseManager
 {
     private Context _context= new Context();
-    private static GregorianCalendar calendar = new System.Globalization.GregorianCalendar();
-    private static CultureInfo culture = new CultureInfo("en-US");
-    private CalendarWeekRule calendarWeekRule = culture.DateTimeFormat.CalendarWeekRule;
-    private DayOfWeek dayOfWeek = culture.DateTimeFormat.FirstDayOfWeek;
 
     /// <summary>
     /// <para>Calculate first of day of the week based on a year and week number.</para>

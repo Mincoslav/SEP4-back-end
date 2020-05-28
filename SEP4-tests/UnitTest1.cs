@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text.Json;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using SEP4_Back_end.Model;
 
 namespace SEP4_tests
@@ -9,7 +11,8 @@ namespace SEP4_tests
     public class Tests
     {
         DatabaseManager _manager = new DatabaseManager();
-        DateTime dateTime = DateTime.Now;
+        static DateTime dateTimeNow = DateTime.Now;
+        DateTime dateTime = dateTimeNow.AddDays(4);
         
         [SetUp]
         public void Setup()
@@ -20,8 +23,10 @@ namespace SEP4_tests
         [Test]
         public void PersistCo2Test()
         {
+            Random r = new Random();
+          
             CO2 co2 = new CO2();
-            co2.CO2_value = (float) 12.4;
+            co2.CO2_value = (float) r.NextDouble() * 100;
             
             co2.Date = this.dateTime;
             String s;
@@ -37,8 +42,9 @@ namespace SEP4_tests
         [Test]
         public void PersistTemperatureTest()
         {
+            Random r = new Random();
             Temperature temperature = new Temperature();
-            temperature.TEMP_value = (float) 20.4;
+            temperature.TEMP_value = (float) (float) r.NextDouble() * 30;
             
             temperature.Date = this.dateTime;
             String s;
@@ -53,8 +59,9 @@ namespace SEP4_tests
         [Test]
         public void PersistHumidityTest()
         {
+            Random r = new Random();
             Humidity humidity = new Humidity();
-            humidity.HUM_value = (float) 69.69;
+            humidity.HUM_value = (float) (float) (float) r.NextDouble() * 100;
             
             humidity.Date = this.dateTime;
             String s;
