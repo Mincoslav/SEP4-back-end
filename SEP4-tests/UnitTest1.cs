@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text.Json;
 using NUnit.Framework;
+using SEP4_Back_end.DB;
 using SEP4_Back_end.Model;
 
 namespace SEP4_tests
@@ -147,15 +148,40 @@ namespace SEP4_tests
             
             testerList =  JsonSerializer.Deserialize<List<Humidity>>(databaseList);
            // System.Console.WriteLine(databaseList);
-
-            
-            
-            /*
-            Assert.AreEqual(humidities[0].Date, testerList[0].Date);
-            */
+           
+           /*
+           Assert.AreEqual(humidities[0].Date, testerList[0].Date);
+           */
             Assert.AreEqual(humidities[0].HUM_value, testerList[0].HUM_value);
             Assert.AreEqual(humidities[0].HUM_ID, testerList[0].HUM_ID);
+        }
 
+        [Test]
+        public void PacketTestingGateway()
+        {
+            string quote = "\"";
+            String s = "{"+quote+"cmd"+quote+":"+quote+"gw"+quote+","+quote+"seqno"+quote+":22,"+quote+"EUI"+quote+":"+quote+"0004A30B00259F36"+quote+","+quote+"ts"+quote+":1590665669281,"+quote+"fcnt"+quote+":0,"+quote+"port"+quote+":2,"+quote+"freq"+quote+":867300000,"+quote+"toa"+quote+":0,"+quote+"dr"+quote+":"+quote+"SF12 BW125 4/5"+quote+","+quote+"ack"+quote+":false,"+quote+"gws"+quote+":[{"+quote+"rssi"+quote+":-113,"+quote+"snr"+quote+":-11,"+quote+"ts"+quote+":1590665669281,"+quote+"tmms"+quote+":50000,"+quote+"time"+quote+":"+quote+"2020-05-28T11:34:29.153078765Z"+quote+","+quote+"gweui"+quote+":"+quote+"7076FFFFFF019BCE"+quote+","+quote+"ant"+quote+":0,"+quote+"lat"+quote+":55.809815,"+quote+"lon"+quote+":9.623305999999957}],"+quote+"bat"+quote+":255,"+quote+"data"+quote+":"+quote+"000041be0000"+quote+"}";
+
+            Packet p = JsonSerializer.Deserialize<Packet>(s,new JsonSerializerOptions { IgnoreNullValues = true });
+            Console.WriteLine(s);
+            Console.WriteLine(p.seqno);
+            
+            Assert.NotNull(p);
+            Assert.True(p.cmd == "gw");
+        }
+
+        [Test]
+        public void PacketTestingDownLink()
+        {
+            string quote = "\"";
+            String s = "{"+quote+"cmd"+quote+":"+quote+"rx"+quote+","+quote+"seqno"+quote+":33,"+quote+"EUI"+quote+":"+quote+"0004A30B00259F36"+quote+","+quote+"ts"+quote+":1590740416625,"+quote+"fcnt"+quote+":0,"+quote+"port"+quote+":2,"+quote+"freq"+quote+":867900000,"+quote+"rssi"+quote+":-114,"+quote+"snr"+quote+":-18,"+quote+"toa"+quote+":1318,"+quote+"dr"+quote+":"+quote+"SF12 BW125 4/5"+quote+","+quote+"ack"+quote+":false,"+quote+"bat"+quote+":255,"+quote+"offline"+quote+":false,"+quote+"data"+quote+":"+quote+"000041b40000"+quote+"}";
+            Packet p = JsonSerializer.Deserialize<Packet>(s,new JsonSerializerOptions { IgnoreNullValues = true });
+            
+            Console.WriteLine(s);
+            Console.WriteLine(p.seqno);
+            
+            Assert.NotNull(p);
+            Assert.True(p.cmd == "rx");
         }
     }
 }
