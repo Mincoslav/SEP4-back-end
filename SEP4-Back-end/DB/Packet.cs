@@ -2,24 +2,27 @@ using System;
 
 namespace SEP4_Back_end.DB
 {
-    public class Packet
-    {
-        public string cmd {get;set;}
-        public string EUI{get;set;}
-        public int ts { get; set; }
-        public bool ack { get; set; }
-        public int bat { get; set; }
-        public int fcnt { get; set; }
-        public int port{get;set;}
-        public  String encdata { get; set; }
-        public bool confirmed {get;set;}
-        public String data{get;set;}
-        public int freq { get; set; }
-        public String dr { get; set; }
-        public byte[] gws { get; set; }
-        
-        
+    public class Packet {
+        public string? cmd { get; set; }
+        public string? EUI { get; set; }
+        public Int64? ts { get; set; }
+        public bool? ack { get; set; }
+        public int? bat { get; set; }
+        public int? fcnt { get; set; }
+        public int? port { get; set; }
+        public String? encdata { get; set; }
+        public bool? confirmed { get; set; }
+        public String? data { get; set; }
+        public int? freq { get; set; }
+        public String? dr { get; set; }
+        public GWS?[] gws { get; set; }
+        public int? rssi { get; set; }
+        public int? snr { get; set; }
+        public int? toa { get; set; }
+        public int? seqno { get; set; }
 
+
+        /*
         public Packet(string cmd, string EUI, int port, String data) {
             this.confirmed = false;
             this.cmd = cmd;
@@ -44,6 +47,7 @@ namespace SEP4_Back_end.DB
             this.dr = dr;
             this.gws = gws;
         }
+        */
 
         public Packet()
         {

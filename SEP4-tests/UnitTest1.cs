@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text.Json;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using SEP4_Back_end.Model;
 
 namespace SEP4_tests
@@ -13,7 +12,7 @@ namespace SEP4_tests
         DatabaseManager _manager = new DatabaseManager();
         static DateTime dateTimeNow = DateTime.Now;
         DateTime dateTime = dateTimeNow.AddDays(4);
-        
+
         [SetUp]
         public void Setup()
         {
