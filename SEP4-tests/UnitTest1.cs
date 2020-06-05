@@ -32,7 +32,7 @@ namespace SEP4_tests
             String s;
             s = JsonSerializer.Serialize(co2);
             
-            _manager.persistCO2(s, "toilet");
+            _manager.persistCO2(co2.CO2_value.ToString(),co2.Date, "toilet");
             string co2_JSON = _manager.getCO2(dateTime);
             CO2 co2_2 = JsonSerializer.Deserialize<CO2>(co2_JSON);
             Assert.AreEqual(co2_2.CO2_value, co2.CO2_value);
@@ -50,7 +50,7 @@ namespace SEP4_tests
             String s;
             s = JsonSerializer.Serialize(temperature);
             
-            _manager.persistTemperature(s, "toilet");
+            _manager.persistTemperature(temperature.TEMP_value.ToString(),temperature.Date, "toilet");
             string temperature_JSON = _manager.getTemperature(dateTime);
             Temperature temperature2 = JsonSerializer.Deserialize<Temperature>(temperature_JSON);
             Assert.AreEqual(temperature2.TEMP_value, temperature.TEMP_value);
@@ -67,7 +67,7 @@ namespace SEP4_tests
             String s;
             s = JsonSerializer.Serialize(humidity);
             
-            _manager.persistHumdity(s, "toilet");
+            _manager.persistHumdity(humidity.HUM_value.ToString(),humidity.Date, "toilet");
             string humidity_JSON = _manager.getHumidity(dateTime);
             Humidity humidity2 = JsonSerializer.Deserialize<Humidity>(humidity_JSON);
             Assert.AreEqual(humidity2.HUM_value, humidity.HUM_value);

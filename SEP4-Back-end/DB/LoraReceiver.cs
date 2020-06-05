@@ -47,26 +47,38 @@ namespace SEP4_Back_end.DB
 
                             case 2:
                             {
+                                DateTime epoch = new DateTime(1970,1,1,2,0,0,DateTimeKind.Local);
+                                Console.WriteLine(Packet.data);
+                                
                                 //Humidity send to DB
-                                String humidity = Packet.data[0].ToString() + Packet.data[1].ToString();
+                                String humidity = Packet.data[0].ToString() + Packet.data[1].ToString() + Packet.data[2].ToString() + Packet.data[3].ToString();
+                                Console.WriteLine(humidity);
                                 int decValueHum = Convert.ToInt32(humidity, 16);
+                                Console.WriteLine("--------------" + decValueHum);
                                 // ReSharper disable once PossibleLossOfFraction
-                                double humidityValueAfterConversion = decValueHum / 100; //probably doesn't work
-                                _manager.persistHumdity(humidityValueAfterConversion.ToString(), "toilet");
+                                double humidityValueAfterConversion = decValueHum; //probably doesn't work
+                                Console.WriteLine("--------------" + humidityValueAfterConversion);
+                                _manager.persistHumdity(humidityValueAfterConversion.ToString(),epoch.AddSeconds((double) (Packet.ts/1000)), "toilet");
 
                                 //Temperature send to DB
-                                String temperature = Packet.data[2].ToString() + Packet.data[3].ToString();
+                                String temperature = Packet.data[4].ToString() + Packet.data[5].ToString() + Packet.data[6].ToString() + Packet.data[7].ToString();
+                                Console.WriteLine(temperature);
                                 int decValueTemperature = Convert.ToInt32(temperature, 16);
+                                Console.WriteLine("--------------" + decValueTemperature);
                                 // ReSharper disable once PossibleLossOfFraction
-                                double temperatureValueAfterConversion = decValueTemperature / 1000; //should work
-                                _manager.persistTemperature(temperatureValueAfterConversion.ToString(), "toilet");
+                                double temperatureValueAfterConversion = decValueTemperature; //should work
+                                Console.WriteLine("--------------" + temperatureValueAfterConversion);
+                                _manager.persistTemperature(temperatureValueAfterConversion.ToString(),epoch.AddSeconds((double) (Packet.ts/1000)) ,"toilet");
                                 
                                 //CO2 send to DB
-                                String CO2 = Packet.data[4].ToString() + Packet.data[5].ToString();
+                                String CO2 = Packet.data[8].ToString() + Packet.data[9].ToString() + Packet.data[10].ToString() + Packet.data[11].ToString();
                                 int decValueCo2 = Convert.ToInt32(CO2, 16);
+                                Console.WriteLine(CO2);
+                                Console.WriteLine("--------------" + decValueCo2);
                                 // ReSharper disable once PossibleLossOfFraction
-                                double co2ValueAfterConversion = decValueCo2 / 100; //probably doesn't work
-                                _manager.persistCO2(co2ValueAfterConversion.ToString(), "toilet");
+                                double co2ValueAfterConversion = decValueCo2; //probably doesn't work
+                                Console.WriteLine("--------------" + co2ValueAfterConversion);
+                                _manager.persistCO2(co2ValueAfterConversion.ToString(),epoch.AddSeconds((double) (Packet.ts/1000)), "toilet");
 
                                 
                             }

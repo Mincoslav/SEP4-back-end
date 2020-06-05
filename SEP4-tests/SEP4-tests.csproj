@@ -8,13 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="nunit" Version="3.12.0" />
-        <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+      <ProjectReference Include="..\SEP4-Back-end\SEP4-Back-end.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SEP4-Back-end\SEP4-Back-end.csproj" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.0-preview-20200519-01" />
+      <PackageReference Include="NUnit" Version="3.12.0" />
+      <PackageReference Include="NUnit3TestAdapter" Version="3.17.0-beta.1" />
     </ItemGroup>
 
 </Project>

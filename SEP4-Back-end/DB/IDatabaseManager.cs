@@ -5,9 +5,9 @@ namespace SEP4_Back_end.DB
 {
     public interface IDatabaseManager
     {
-        void persistCO2(string co2,string roomName);
-        void persistHumdity(string humidity,string roomName);
-        void persistTemperature(string temperature,string roomName);
+        void persistCO2(string co2,DateTime date,string roomName);
+        void persistHumdity(string humidity,DateTime date,string roomName);
+        void persistTemperature(string temperature,DateTime date,string roomName);
         void persistServo(string servo,string roomName);
         string getCO2(DateTime dateTime);
         string getHumidity(DateTime dateTime);

@@ -5,21 +5,21 @@ namespace SEP4_Back_end.DB
     public class Packet {
         public string? cmd { get; set; }
         public string? EUI { get; set; }
-        public Int64? ts { get; set; }
+        public long? ts { get; set; }
         public bool? ack { get; set; }
-        public int? bat { get; set; }
-        public int? fcnt { get; set; }
-        public int? port { get; set; }
+        public long? bat { get; set; }
+        public long? fcnt { get; set; }
+        public long? port { get; set; }
         public String? encdata { get; set; }
         public bool? confirmed { get; set; }
         public String? data { get; set; }
-        public int? freq { get; set; }
+        public long? freq { get; set; }
         public String? dr { get; set; }
         public GWS?[] gws { get; set; }
-        public int? rssi { get; set; }
-        public int? snr { get; set; }
-        public int? toa { get; set; }
-        public int? seqno { get; set; }
+        public long? rssi { get; set; }
+        public long? snr { get; set; }
+        public double? toa { get; set; }
+        public long? seqno { get; set; }
 
 
         /*

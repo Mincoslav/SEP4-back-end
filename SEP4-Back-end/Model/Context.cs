@@ -33,6 +33,6 @@ namespace SEP4_Back_end.Model
 
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer("Server=MICHAL-XPS15;Database=sensor;Trusted_Connection=True;");
+            => options.UseSqlServer("Server=localhost;Database=sensor;Trusted_Connection=True;");
     }
 }

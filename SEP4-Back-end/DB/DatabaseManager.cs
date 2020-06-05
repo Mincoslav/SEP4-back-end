@@ -40,13 +40,17 @@ public class DatabaseManager : IDatabaseManager
     /// </summary>
     /// <param name="co2">CO2 serialized object in JSON</param>
     /// <param name="roomName">Room where the measurement was taken.</param>
-    public void persistCO2(string co2,string roomName)
+    public void persistCO2(string co2,DateTime date,string roomName)
         //persist means adding to the database
     {
         CO2 co2Object;
         try
         {
-            co2Object = JsonSerializer.Deserialize<CO2>(co2);
+            co2Object = new CO2();
+            Console.WriteLine(co2+"---------------------------------------------------------");
+            co2Object.CO2_value = float.Parse(co2);
+            Console.WriteLine(co2Object.CO2_value+"---------------------------------------");
+            co2Object.Date = date;
             _context.CO2.Add(co2Object);
             Room r = getRoomByName(roomName);
             _context.SaveChanges();
@@ -69,13 +73,15 @@ public class DatabaseManager : IDatabaseManager
     /// </summary>
     /// <param name="humidity">Humidity serialized object in JSON</param>
     /// <param name="roomName">Room where the measurement was taken.</param>
-    public void persistHumdity(string humidity,string roomName)
+    public void persistHumdity(string humidity,DateTime date,string roomName)
         //persist means adding to the database
     {
         Humidity humidityObject;
         try
         {
-            humidityObject = JsonSerializer.Deserialize<Humidity>(humidity);
+            humidityObject = new Humidity();
+            humidityObject.HUM_value = float.Parse(humidity);
+            humidityObject.Date = date;
             _context.Humidity.Add(humidityObject);
             Room r = getRoomByName(roomName);
             _context.SaveChanges();
@@ -97,13 +103,15 @@ public class DatabaseManager : IDatabaseManager
     /// </summary>
     /// <param name="temperature">temperature serialized object in JSON</param>
     /// <param name="roomName">Room where the measurement was taken.</param>
-    public void persistTemperature(string temperature,string roomName) 
+    public void persistTemperature(string temperature,DateTime date,string roomName) 
         //persist means adding to the database
     {
         Temperature temperatureObject;
         try
         {
-            temperatureObject = JsonSerializer.Deserialize<Temperature>(temperature);
+            temperatureObject = new Temperature();
+            temperatureObject.TEMP_value = float.Parse(temperature);
+            temperatureObject.Date = date;
             _context.Temperature.Add(temperatureObject);
             Room r = getRoomByName(roomName);
             _context.SaveChanges();
@@ -130,7 +138,7 @@ public class DatabaseManager : IDatabaseManager
         //persist means adding to the database
     {
         Servo servoObject;
-        
+        LoraReceiver lora = new LoraReceiver();
         try
         {
             servoObject = JsonSerializer.Deserialize<Servo>(servo);
@@ -142,6 +150,14 @@ public class DatabaseManager : IDatabaseManager
             list.ROOM_ID = r.RoomID;
             _context.Servos.Add(list);
             _context.SaveChanges();
+            
+            Packet packet3 = new Packet();
+            packet3.cmd = "tx";
+            packet3.EUI = "0004A30B00259F36";
+            packet3.port = 1;
+            packet3.data = "AABBCCDD";
+            packet3.confirmed = false;
+            lora.SendPacket(packet3);
         }
         catch (Exception e)
         {
